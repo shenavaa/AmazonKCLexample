@@ -65,7 +65,7 @@ public class Main {
         
         ClientConfiguration config = new ClientConfiguration();
      
-        kinesisClientLibConfiguration.withInitialPositionInStream(InitialPositionInStream.valueOf(STREAM_POSITION)).withKinesisClientConfig(config).withRegionName(Region.getRegion(Regions.AP_NORTHEAST_2).getName());
+        kinesisClientLibConfiguration.withInitialPositionInStream(InitialPositionInStream.valueOf(STREAM_POSITION)).withKinesisClientConfig(config).withRegionName(Region.getRegion(Regions.AP_SOUTHEAST_2).getName());
     }
 
 	public void run() throws UnknownHostException {
