@@ -10,6 +10,8 @@ import com.amazonaws.AmazonClientException;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.kinesis.clientlibrary.interfaces.v2.IRecordProcessorFactory;
 import com.amazonaws.services.kinesis.clientlibrary.lib.worker.InitialPositionInStream;
 import com.amazonaws.services.kinesis.clientlibrary.lib.worker.KinesisClientLibConfiguration;
@@ -62,8 +64,8 @@ public class Main {
    
         
         ClientConfiguration config = new ClientConfiguration();
-        
-        kinesisClientLibConfiguration.withInitialPositionInStream(InitialPositionInStream.valueOf(STREAM_POSITION)).withKinesisClientConfig(config);
+     
+        kinesisClientLibConfiguration.withInitialPositionInStream(InitialPositionInStream.valueOf(STREAM_POSITION)).withKinesisClientConfig(config).withRegionName(Region.getRegion(Regions.AP_NORTHEAST_2).getName());
     }
 
 	public void run() throws UnknownHostException {
