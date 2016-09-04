@@ -24,7 +24,7 @@ public class RecordProcessor implements IRecordProcessor {
 	public void processRecords(ProcessRecordsInput records) {
 		List<Record> lRecords = records.getRecords();
 		for (Record record: lRecords) {
-			log.debug(record.getApproximateArrivalTimestamp() + "\t" + record.getPartitionKey() + "\t" + record.getSequenceNumber() + "\t" + new String(record.getData().array(), Charset.forName("UTF-8")));
+			log.info(record.getApproximateArrivalTimestamp() + "\t" + record.getPartitionKey() + "\t" + record.getSequenceNumber() + "\t" + new String(record.getData().array(), Charset.forName("UTF-8")));
 		}
 	}
 
