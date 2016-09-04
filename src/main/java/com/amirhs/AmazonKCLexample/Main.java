@@ -30,8 +30,8 @@ public class Main {
 	private void init() throws UnknownHostException {
         java.security.Security.setProperty("networkaddress.cache.ttl", "0");
         
-        //workerId = InetAddress.getLocalHost().getCanonicalHostName() + ":" + UUID.randomUUID();
-        workerId = InetAddress.getLocalHost().getCanonicalHostName();
+        workerId = InetAddress.getLocalHost().getCanonicalHostName() + ":" + UUID.randomUUID();
+        //workerId = InetAddress.getLocalHost().getCanonicalHostName();
 
         credentialsProvider = new ProfileCredentialsProvider();
         
