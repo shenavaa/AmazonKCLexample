@@ -19,10 +19,11 @@ import com.amazonaws.services.kinesis.model.Record;
 public class RecordProcessor implements IRecordProcessor {
 	private static Logger log = Logger.getLogger(RecordProcessor.class);
 	private String shard = new String();
+	private Long nextCheckpointTimeInMillis;
 	public void initialize(InitializationInput shardId) {
 		log.info("Initialized RecordProcessor for shard: " + shardId.getShardId());
 		this.shard = shardId.getShardId();
-		
+		nextCheckpointTimeInMillis = System.currentTimeMillis() + 3000L;
 	}
 
 	public void processRecords(ProcessRecordsInput records) {
@@ -31,8 +32,12 @@ public class RecordProcessor implements IRecordProcessor {
 		
 		for (Record record: lRecords) {
 			log.info(record.getApproximateArrivalTimestamp() + "\t" + record.getPartitionKey() + "\t" + record.getSequenceNumber() + "\t" + "Size: " + record.getData().array().length);
-			
 		}
+
+		if (System.currentTimeMillis() > nextCheckpointTimeInMillis) {
+                        checkpoint(checkpointer);
+                        nextCheckpointTimeInMillis = System.currentTimeMillis() + 3000L;
+                }
 	}
 
 	public void shutdown(ShutdownInput arg) {
