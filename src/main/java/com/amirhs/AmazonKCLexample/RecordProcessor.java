@@ -30,7 +30,7 @@ public class RecordProcessor implements IRecordProcessor {
 		List<Record> lRecords = records.getRecords();
 		
 		for (Record record: lRecords) {
-			log.info(record.getApproximateArrivalTimestamp() + "\t" + record.getPartitionKey() + "\t" + record.getSequenceNumber() + "\t" + new String(record.getData().array(), Charset.forName("UTF-8")));
+			log.info(record.getApproximateArrivalTimestamp() + "\t" + record.getPartitionKey() + "\t" + record.getSequenceNumber() + "\t" + "Size: " + record.getData().array().length);
 			
 		}
 	}

@@ -23,6 +23,10 @@ public class Main {
 	private static final String STREAM_NAME = System.getProperty("stream");
 	private static final String APPLICATION_NAME = System.getProperty("name");
 	private static final String STREAM_POSITION = System.getProperty("position");
+	private static final String IDLE_TIME = System.getProperty("idletime");
+	private static final String BACKOFF = System.getProperty("backoff");
+	private static final String MAXRECORDS = System.getProperty("maxrecords");
+	
 	private String workerId; 
 	
 	private KinesisClientLibConfiguration kinesisClientLibConfiguration;
@@ -56,7 +60,22 @@ public class Main {
        		System.exit(1);
        	}
 
-       
+	if (IDLE_TIME==null) {
+                log.error("get records ideltime between records not found in System.properties. Please set \"-Didletime=millies\"");
+                System.exit(1);
+        }
+
+        if (BACKOFF==null) {
+                log.error("Backoff time not found in System.properties. Please set \"-Dbackoff=millies\"");
+                System.exit(1);
+        }
+
+        if (MAXRECORDS==null) {
+                log.error("Maxrecords not found in System.properties. Please set \"-Dmaxrecords=int\"");
+                System.exit(1);
+        }
+
+
         kinesisClientLibConfiguration =
                 new KinesisClientLibConfiguration(APPLICATION_NAME,
                         STREAM_NAME,
@@ -66,7 +85,7 @@ public class Main {
         
         ClientConfiguration config = new ClientConfiguration();
      
-        kinesisClientLibConfiguration.withInitialPositionInStream(InitialPositionInStream.valueOf(STREAM_POSITION)).withKinesisClientConfig(config).withRegionName(Region.getRegion(Regions.AP_SOUTHEAST_2).getName()).withIdleTimeBetweenReadsInMillis(60000L).withFailoverTimeMillis(300000L);
+        kinesisClientLibConfiguration.withInitialPositionInStream(InitialPositionInStream.valueOf(STREAM_POSITION)).withKinesisClientConfig(config).withRegionName(Region.getRegion(Regions.AP_SOUTHEAST_2).getName()).withIdleTimeBetweenReadsInMillis(Long.parseLong(IDLE_TIME)).withTaskBackoffTimeMillis(Long.parseLong(BACKOFF)).withMaxRecords(Integer.parseInt(MAXRECORDS)).withCallProcessRecordsEvenForEmptyRecordList(false);
         
     }
 
